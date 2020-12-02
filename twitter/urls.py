@@ -17,9 +17,15 @@ from django.contrib import admin
 from django.urls import path
 from splash.views import splash
 from login.views import login
+from home.views import home
+from hashtag.views import hashtag
+from profilepage.views import profilepage
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', splash, name='splash'),
     path('login/', login, name='login'),
+    path('home/', home, name='home'),
+    path('hashtag/', hashtag, name='hashtag'),
+    path('profilepage/', profilepage, name='profilepage'),
 ]
