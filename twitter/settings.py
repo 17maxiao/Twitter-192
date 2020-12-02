@@ -43,7 +43,6 @@ INSTALLED_APPS = [
     'profilepage',
     'splash',
     'tweet',
-    'hashtag',
 ]
 
 MIDDLEWARE = [
