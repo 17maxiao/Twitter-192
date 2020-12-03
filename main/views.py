@@ -26,7 +26,7 @@ def home_view(request):
 
         tweet.save()
 
-        tags = [i.split(" ", 1)[0] for i in tweet.body.split("#")[1:]]
+        tags = ["#" + i.split(" ", 1)[0] for i in tweet.body.split("#")[1:]]
 
         for i in tags:
             print(i)
