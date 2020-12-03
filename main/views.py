@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout 
 from django.contrib.auth.models import User 
 from main.models import Tweet
+from main.models import Hashtag
 
 # Create your views here.
 
@@ -25,11 +26,20 @@ def home_view(request):
             likes=0
         )
         tweet.save()
+        hashtag = Hashtag(
+            tagName=request.POST['tagName'],
+        )
+        hashtag.save()
     tweets = Tweet.objects.all()
-    return render(request, "home.html", {'tweets': tweets})
+    hashtags = Hashtag.objects.all()
+    
+    return render(request, "home.html", {'tweets': tweets, 'hashtags': hashtags})
 
-def hashtag_view(request):
-	return render(request, "hashtag.html", {})
+# def hashtag_view(request): #generate hashtag view here
+#     hashtag = Hashtag.objects.get(id=request.GET['id'])
+#     hashtag.save()
+#     hashtags = Hashtag.objects.get()
+# 	return render(request, "hashtag.html", {hash})
 
 def login_account(request):
     username, password = request.POST['username'], request.POST['password']
