@@ -15,17 +15,21 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from splash.views import splash
-from login.views import login
-from home.views import home
-from hashtag.views import hashtag
-from profilepage.views import profilepage
+# from splash.views import splash
+# from login.views import login
+# from home.views import home
+# from hashtag.views import hashtag
+# from profilepage.views import profilepage
+from main.views import splash_view, login_view, home_view, hashtag_view, profile_view, signup, login_account, logout_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', splash, name='splash'),
-    path('login/', login, name='login'),
-    path('home/', home, name='home'),
-    path('hashtag/', hashtag, name='hashtag'),
-    path('profilepage/', profilepage, name='profilepage'),
+    path('', splash_view, name='splash_view'),
+    path('login/', login_view, name='login_view'),
+    path('home/', home_view, name='home_view'),
+    path('hashtag/', hashtag_view, name='hashtag_view'),
+    path('profile/', profile_view, name='profile_view'),
+    path('signup', signup, name='signup'),
+    path('signin', login_account, name='login_account'),
+    path('logout', logout_view, name='logout_view')
 ]
