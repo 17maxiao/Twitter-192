@@ -51,7 +51,7 @@ def home_view(request):
 def hashtag_view(request, id):
     hashtag = Hashtag.objects.get(body=id)
     tweets = hashtag.hashToTweet.all()
-    return render(request, "hashtag.html", {"tweets" : tweets})
+    return render(request, "hashtag.html", {"tweets" : tweets, "id":id})
 
 def login_account(request):
     username, password = request.POST['username'], request.POST['password']
@@ -78,9 +78,14 @@ def logout_view(request):
 
 def delete_view(request):
     tweet = Tweet.objects.get(id=request.GET['id'])
+    
     if request.user == tweet.author:
         tweet.delete()
-    return redirect('/home')
+
+    tweets = Tweet.objects.all()
+    
+    hashtags = Hashtag.objects.all()
+    return render(request, "home.html", {'tweets': tweets, 'hashtags': hashtags})
 
 def like_view(request):
     #pass

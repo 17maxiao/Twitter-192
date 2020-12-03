@@ -9,3 +9,5 @@
  4. The terminal will display a message towards the end with the line "Starting development server at http://127.0.0.1:8000/" or something among those lines - press CTRL+click or CMD+click on the url to navigate to our twitter app on your browser
  5. Happy #tweeting!
 
+ -May and Alicia 
+
