@@ -62,7 +62,7 @@
                                 <h2>Tweet Feed: </h2>
                                 {% for tweet in tweets %}
                                     <h3>{{tweet.body}}</h3>
-                                    <p>{{tweet.author}}</p>
+                                    <p>{{tweet.author}} at {{tweet.created_at}}</p>
                                     <a href = "delete?id={{tweet.id}}">Delete</a>
                                     <a href = "like?id={{tweet.id}}">WOOHOO (Likes): {{tweet.likes.count}}</a>
                                     <hr />
@@ -70,6 +70,11 @@
                             </div>
                             <div class="column right">
                                 <h2>Hashtags: </h2>
+                                {% for hashtag in hashtags %}
+                                    <h3>{{hashtag.body}}</h3>
+                                    <!-- <a href = "delete?id={{tweet.id}}">Delete</a> -->
+                                    <hr />
+                                {% endfor %}
                             </div>
                         </div>
                     </div>

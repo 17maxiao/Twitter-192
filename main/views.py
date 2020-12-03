@@ -23,23 +23,34 @@ def home_view(request):
             body=request.POST['body'],
             author=request.user
         )
-        # likes = UserLikes(
-        #     # users = request.user,
-        #     number=0,
-        #     tweet=tweet
-        # )
 
         tweet.save()
+
+        tags = [i.replace(" ", "") for i in tweet.body.split("#")[1:]]
+
+        for i in tags:
+            print(i)
+            hashtag = None
+            if len(Hashtag.objects.filter(body=i)) == 0:
+                hashtag = Hashtag.objects.create(body=i)
+            else:
+                hashtag = Hashtag.objects.get(body=i)
+
+            hashtag.hashToTweet.add(tweet)
+            print(len(Hashtag.objects.all()))
+    
         # likes.save()
         # likes.users.add(request.user)
 
     tweets = Tweet.objects.all()
+    hashtags = Hashtag.objects.all()
    # hashtags = Hashtag.objects.all()
-   # render(request, "home.html", {'hashtags': hashtags})
-    return render(request, "home.html", {'tweets': tweets})
+    #render(request, "home.html", {'hashtags': hashtags})
+    return render(request, "home.html", {'tweets': tweets, 'hashtags': hashtags})
 
 def hashtag_view(request):
-	return render(request, "hashtag.html", {})
+    hashtags = Hashtag.objects.all()
+    return render(request, "hashtag.html", {"hashtags" : hashtags})
 
 def login_account(request):
     username, password = request.POST['username'], request.POST['password']
@@ -80,12 +91,7 @@ def like_view(request):
         newlike.save()
         tweet.likes.add(newlike)
         tweet.save()
-    # if request.user not in UserLikes.users.objects.all():
-    #     numberlikes.number += 1
-    #     numberlikes.users.add(request.user)
-    #     # UserLikes.likes += 1
-    #     # UserLikes.users.add(request.user)
-    #     numberlikes.save()
+
     tweets = Tweet.objects.all()
     return redirect('/home')
     # return render(request, "home.html", {'tweets': tweets})
