@@ -25,40 +25,32 @@ def home_view(request):
         )
 
         tweet.save()
-    tweets = Tweet.objects.all()
+        
+        # Hashtag.objects.all().delete()
+        # tags = [i.replace(" ", "") for i in tweet.body.split("#")[1:]]
+        tags = [i.split(" ", 1)[0] for i in tweet.body.split("#")[1:]]
 
-    if request.method == "POST":
-        Hashtag.objects.all().delete()
-        allTags = []
-        for tweet in tweets:
-            tags = [i.split(" ", 1)[0] for i in tweet.body.split("#")[1:]]
-            for tag in tags:
-                allTags.append(tag)
-        allTagsSet = set(allTags)
-        for i in allTagsSet:
-            print(i)
+        for i in tags:
             hashtag = None
             if len(Hashtag.objects.filter(body=i)) == 0:
                 hashtag = Hashtag.objects.create(body=i)
             else:
                 hashtag = Hashtag.objects.get(body=i)
+
             hashtag.hashToTweet.add(tweet)
-            print(len(Hashtag.objects.all()))
-    
-        # likes.save()
-        # likes.users.add(request.user) 
+        #print(len(Hashtag.objects.all()))
+
+    # likes.save()
+    # likes.users.add(request.user) 
+    tweets = Tweet.objects.all()
     hashtags = Hashtag.objects.all()
    # hashtags = Hashtag.objects.all()
     #render(request, "home.html", {'hashtags': hashtags})
     return render(request, "home.html", {'tweets': tweets, 'hashtags': hashtags})
 
-def hashtag_view(request):
-    hashtag = Hashtag.objects.get(id=request.GET['id'])
-    print(hashtag.body)
+def hashtag_view(request, id):
+    hashtag = Hashtag.objects.get(body=id)
     tweets = hashtag.hashToTweet.all()
-    for twt in tweets:
-        print("teehee")
-        print(twt)
     return render(request, "hashtag.html", {"tweets" : tweets})
 
 def login_account(request):
