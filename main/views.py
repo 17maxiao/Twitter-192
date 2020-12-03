@@ -1,8 +1,7 @@
 from django.shortcuts import render, redirect 
 from django.contrib.auth import authenticate, login, logout 
 from django.contrib.auth.models import User 
-from main.models import Tweet
-from main.models import Hashtag
+from main.models import Tweet, Hashtag
 
 # Create your views here.
 
@@ -32,8 +31,8 @@ def home_view(request):
         hashtag.save()
     tweets = Tweet.objects.all()
     hashtags = Hashtag.objects.all()
-    
-    return render(request, "home.html", {'tweets': tweets, 'hashtags': hashtags})
+    render(request, "home.html", {'hashtags': hashtags})
+    return render(request, "home.html", {'tweets': tweets})
 
 # def hashtag_view(request): #generate hashtag view here
 #     hashtag = Hashtag.objects.get(id=request.GET['id'])
@@ -72,7 +71,9 @@ def delete_view(request):
 
 def like_view(request):
     tweet = Tweet.objects.get(id=request.GET['id'])
-    tweet.likes += 1
-    tweet.save()
+    if request.user not in tweet.userlikes.objects.all():
+        tweet.likes += 1
+        tweet.userlikes.add(request.user)
+        tweet.save()
     tweets = Tweet.objects.all()
     return render(request, "home.html", {'tweets': tweets})
