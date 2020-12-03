@@ -60,4 +60,9 @@ def delete_view(request):
         tweet.delete()
     return redirect('/home')
 
-
+def like_view(request):
+    tweet = Tweet.objects.get(id=request.GET['id'])
+    tweet.likes += 1
+    tweet.save()
+    tweets = Tweet.objects.all()
+    return render(request, "home.html", {'tweets': tweets})
