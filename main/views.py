@@ -22,7 +22,6 @@ def home_view(request):
         tweet = Tweet(
             body=request.POST['body'],
             author=request.user
-            # likes=0
         )
         # likes = UserLikes(
         #     # users = request.user,

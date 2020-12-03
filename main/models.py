@@ -16,11 +16,11 @@ class Tweet(models.Model):
     author = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True)
     created_at = models.DateTimeField(auto_now=True)
     likes = models.ManyToManyField(UserLikes)
-    # likes = models.IntegerField()
     # userlikes = models.ManyToManyField("self")
 
     def __str__(self):
         return self.body  
+
 
 
 class Hashtag(models.Model):
@@ -29,4 +29,3 @@ class Hashtag(models.Model):
     
     def __str__(self):
         return self.body
-
