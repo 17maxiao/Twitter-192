@@ -31,7 +31,7 @@ def home_view(request):
         Hashtag.objects.all().delete()
         allTags = []
         for tweet in tweets:
-            tags = ["#" + i.split(" ", 1)[0] for i in tweet.body.split("#")[1:]]
+            tags = [i.split(" ", 1)[0] for i in tweet.body.split("#")[1:]]
             for tag in tags:
                 allTags.append(tag)
         allTagsSet = set(allTags)
@@ -53,8 +53,13 @@ def home_view(request):
     return render(request, "home.html", {'tweets': tweets, 'hashtags': hashtags})
 
 def hashtag_view(request):
-    hashtags = Hashtag.objects.all()
-    return render(request, "hashtag.html", {"hashtags" : hashtags})
+    hashtag = Hashtag.objects.get(id=request.GET['id'])
+    print(hashtag.body)
+    tweets = hashtag.hashToTweet.all()
+    for twt in tweets:
+        print("teehee")
+        print(twt)
+    return render(request, "hashtag.html", {"tweets" : tweets})
 
 def login_account(request):
     username, password = request.POST['username'], request.POST['password']

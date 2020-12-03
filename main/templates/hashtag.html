@@ -15,6 +15,13 @@
                     <br>
                     <h2 class="subtitle">Hashtags:</h2>
                 </div>
+                <div class="container">
+                    {% for tweet in tweets %}
+                    <h3>{{tweet.body}}</h3>
+                    <!-- <a href = "delete?id={{tweet.id}}">Delete</a> -->
+                    <hr />
+                {% endfor %}
+                </div>
             </div>
         </div>
     </section>
