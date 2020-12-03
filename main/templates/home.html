@@ -62,7 +62,7 @@
                                 <h2>Tweet Feed: </h2>
                                 {% for tweet in tweets %}
                                     <h3>{{tweet.body}}</h3>
-                                    <p>{{tweet.author}}</p>
+                                    <p>{{tweet.author}} at {{tweet.created_at}}</p>
                                     <a href = "delete?id={{tweet.id}}">Delete</a>
                                     <a href = "like?id={{tweet.id}}">WOOHOO (Likes): {{tweet.likes}}</a>
                                     <hr />
