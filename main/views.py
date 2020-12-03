@@ -25,24 +25,28 @@ def home_view(request):
         )
 
         tweet.save()
+    tweets = Tweet.objects.all()
 
-        tags = ["#" + i.split(" ", 1)[0] for i in tweet.body.split("#")[1:]]
-
-        for i in tags:
+    if request.method == "POST":
+        Hashtag.objects.all().delete()
+        allTags = []
+        for tweet in tweets:
+            tags = ["#" + i.split(" ", 1)[0] for i in tweet.body.split("#")[1:]]
+            for tag in tags:
+                allTags.append(tag)
+        allTagsSet = set(allTags)
+        for i in allTagsSet:
             print(i)
             hashtag = None
             if len(Hashtag.objects.filter(body=i)) == 0:
                 hashtag = Hashtag.objects.create(body=i)
             else:
                 hashtag = Hashtag.objects.get(body=i)
-
             hashtag.hashToTweet.add(tweet)
             print(len(Hashtag.objects.all()))
     
         # likes.save()
-        # likes.users.add(request.user)
-
-    tweets = Tweet.objects.all()
+        # likes.users.add(request.user) 
     hashtags = Hashtag.objects.all()
    # hashtags = Hashtag.objects.all()
     #render(request, "home.html", {'hashtags': hashtags})
