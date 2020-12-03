@@ -64,7 +64,7 @@
                                     <h3>{{tweet.body}}</h3>
                                     <p>{{tweet.author}}</p>
                                     <a href = "delete?id={{tweet.id}}">Delete</a>
-                                    <a href = "like?id={{tweet.id}}">WOOHOO (Likes): {{tweet.likes}}</a>
+                                    <a href = "like?id={{tweet.id}}">WOOHOO (Likes): {{tweet.likes.count}}</a>
                                     <hr />
                                 {% endfor %}
                             </div>
