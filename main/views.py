@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect 
 from django.contrib.auth import authenticate, login, logout 
 from django.contrib.auth.models import User 
-from main.models import Tweet, Hashtag
+from main.models import Tweet, Hashtag, UserLikes
 
 # Create your views here.
 
@@ -21,17 +21,23 @@ def home_view(request):
     if request.method == "POST":
         tweet = Tweet(
             body=request.POST['body'],
-            author=request.user,
-            likes=0
+            author=request.user
         )
+        # likes = UserLikes(
+        #     # users = request.user,
+        #     number=0,
+        #     tweet=tweet
+        # )
+
         tweet.save()
-        hashtag = Hashtag(
-            tagName=request.POST['tagName'],
-        )
-        hashtag.save()
+        
+        # hashtag = Hashtag(
+        #     tagName=request.POST['tagName'],
+        # )
+        # hashtag.save()
     tweets = Tweet.objects.all()
-    hashtags = Hashtag.objects.all()
-    render(request, "home.html", {'hashtags': hashtags})
+   # hashtags = Hashtag.objects.all()
+   # render(request, "home.html", {'hashtags': hashtags})
     return render(request, "home.html", {'tweets': tweets})
 
 # def hashtag_view(request): #generate hashtag view here
@@ -70,10 +76,21 @@ def delete_view(request):
     return redirect('/home')
 
 def like_view(request):
+    #pass
     tweet = Tweet.objects.get(id=request.GET['id'])
-    if request.user not in tweet.userlikes.objects.all():
-        tweet.likes += 1
-        tweet.userlikes.add(request.user)
+    # numberlikes = tweet.UserLikes
+    # numberlikes = UserLikes.objects.get(tweet=tweet)
+    if len(tweet.likes.filter(user=request.user)) == 0:
+        newlike = UserLikes(user=request.user.username)
+        newlike.save()
+        tweet.likes.add(newlike)
         tweet.save()
+    # if request.user not in UserLikes.users.objects.all():
+    #     numberlikes.number += 1
+    #     numberlikes.users.add(request.user)
+    #     # UserLikes.likes += 1
+    #     # UserLikes.users.add(request.user)
+    #     numberlikes.save()
     tweets = Tweet.objects.all()
-    return render(request, "home.html", {'tweets': tweets})
+    return redirect('/home')
+    # return render(request, "home.html", {'tweets': tweets})
