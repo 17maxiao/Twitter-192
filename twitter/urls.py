@@ -20,16 +20,17 @@ from django.urls import path
 # from home.views import home
 # from hashtag.views import hashtag
 # from profilepage.views import profilepage
-from main.views import splash_view, login_view, home_view, hashtag_view, profile_view, signup, login_account, logout_view
+from main.views import splash_view, login_view, home_view, hashtag_view, profile_view, signup, login_account, logout_view, delete_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', splash_view, name='splash_view'),
     path('login/', login_view, name='login_view'),
-    path('home/', home_view, name='home_view'),
+    path('home', home_view, name='home_view'),
     path('hashtag/', hashtag_view, name='hashtag_view'),
     path('profile/', profile_view, name='profile_view'),
     path('signup', signup, name='signup'),
     path('signin', login_account, name='login_account'),
-    path('logout', logout_view, name='logout_view')
+    path('logout', logout_view, name='logout_view'),
+    path('delete', delete_view, name='delete_view')
 ]

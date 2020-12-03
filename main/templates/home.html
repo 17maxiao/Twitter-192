@@ -42,8 +42,15 @@
                         </h1>
                         <br>
                     </div>
+
                     <div class="container">
-                        <input type="submit" name="button" value="Tweet Something!">
+                        <form method="POST" action="/home">
+                            {% csrf_token %}
+                            <p>Tweet Something!</p>
+                            <input name="body" placeholder="quack quack?"/>
+                            <input type="submit" value="Tweet" />
+                        </form>
+                        <hr />
                         {% if user.is_authenticated %}
                         <a href="/logout">Logout</a>
                         <br/><br/>
@@ -53,6 +60,13 @@
                         <div class="row">
                             <div class="column left">
                                 <h2>Tweet Feed: </h2>
+                                {% for tweet in tweets %}
+                                    <h3>{{tweet.body}}</h3>
+                                    <p>{{tweet.author}}</p>
+                                    <a href = "delete?id={{tweet.id}}">Delete</a>
+                                    <a href = "like?id={{tweet.likes}}">Likes: {{tweet.likes}}</a>
+                                    <hr />
+                                {% endfor %}
                             </div>
                             <div class="column right">
                                 <h2>Hashtags: </h2>
